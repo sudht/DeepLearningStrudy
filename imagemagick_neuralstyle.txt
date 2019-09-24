@@ -1,0 +1,71 @@
+!cat /etc/*lease
+
+!apt update
+!apt install -y imagemagick
+!convert
+
+# 이미지 주소 복사
+!wget https://imagemagick.org/image/wizard.jpg
+
+!convert wizard.jpg wizard.png
+!convert wizard.jpg wizard.bmp
+!ls -alsh wi*
+
+!identify -verbose wizard.jpg
+!identify wizard.jpg
+
+!convert wizard.jpg -resize 64x64 wizard_s.jpg
+!ls -alsh wi*
+
+!convert wizard.jpg -crop 40x50+100+80 wizard_c.jpg
+
+# 모나리자 자르기
+!convert wizard.jpg -crop 40x50+130+130 wizard_c.jpg
+
+# 파이썬 실습
+!mkdir converted
+
+%%bash
+for i in $(ls *.jpg); do
+  convert $i -resize 64x64 converted/$i
+done
+ls converted
+
+!git clone https://github.com/anishathalye/neural-style.git
+!wget http://www.vlfeat.org/matconvnet/models/imagenet-vgg-verydeep-19.mat
+%cd neural-style
+
+# GPU 가속기 사용
+
+!git clone https://github.com/anishathalye/neural-style.git
+!wget http://www.vlfeat.org/matconvnet/models/imagenet-vgg-verydeep-19.mat
+!ls *.mat
+
+!pip install scipy==1.1.0
+
+%cd /content/neural-style/
+!python neural_style.py	\
+	--content ./examples/1-content.jpg	\
+	--styles ./examples/2-style1.jpg	\
+	--output ./o1.jpg
+
+# 개인별 실습
+# 자신이 원하는 사진 2장을 합성 (neural-style)
+# 사진 다운은 !wget (이미지 파일 주소)
+# 사진의 크기를 조절하고 싶다면 imagemagick의 convert 활용
+# ex) !convert wizard.jpg -resize 64x64 wizard_s.jpg
+# 사진이 너무 대용량인 경우 연산에 오랜 시간이 소요되니 적당한 크기조절 추천!!!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
